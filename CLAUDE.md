@@ -12,6 +12,10 @@ Claude Code 学習用のリポジトリ。中身は単一 HTML ファイルの�
 - `game/instructions.md` はユーザーが改良指示を書くファイル(「@game/instructions.md通りに改良して」と頼まれる)。
 - ルートの `conversation-*.txt` は過去セッションのエクスポートで、コードではない。
 
+## 作業時の注意
+
+作業前には、必ず、Git commitしてください。
+
 ## game/index.html の構造
 
 1 ファイル内に `<style>` → HTML → `<script>` の順で全て入っている。外部ライブラリなし、Canvas + バニラ JS。
