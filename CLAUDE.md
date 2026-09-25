@@ -4,10 +4,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## リポジトリ概要
 
-Claude Code 学習用のリポジトリ。中身は単一 HTML ファイルの落ちモノパズルゲーム `game/index.html` のみ(日本語 UI)。
+ユーザーが Claude Code を学習するためのリポジトリ。中身は落ちモノパズルゲーム `game/index.html` のみ(日本語 UI)。
 
-- ビルド・依存パッケージ・テスト・lint は存在しない。`game/index.html` をブラウザで直接開いて動作確認する。
-- devcontainer (ubuntu24.04 base) には **node / python3 が無い**(jq はある)。ブラウザも無いため、変更後の検証は「HTML の id と JS の `getElementById` の対応を grep で確認」「`{` `}` の数の一致確認」程度に留め、ブラウザでの確認はユーザーに依頼する。
+- ビルド・テスト・lint は存在しない。
+- devcontainer (ubuntu24.04 base) には **node / python3・ブラウザが無い**(jq はある)。変更後の検証は「HTML の id と JS の `getElementById` の対応を grep で確認」「`{` `}` の数の一致確認」程度に留め、`game/index.html` をブラウザで開いての動作確認はユーザーに依頼する。
 - Git 管理(ブランチ `main`、2026-09-25 開始)。それ以前の変更経緯は Claude のメモリ(`falling-puzzle-history`)にある。
 - `game/instructions.md` はユーザーが改良指示を書くファイル(「@game/instructions.md通りに改良して」と頼まれる)。
 - ルートの `conversation-*.txt` は過去セッションのエクスポートで、コードではない。
@@ -35,4 +35,3 @@ Claude Code 学習用のリポジトリ。中身は単一 HTML ファイルの�
 ## ユーザーの好み・経緯
 
 - ユーザーとのやり取りは日本語。
-- ユーザーはClaude Codeの学習のために作業している
