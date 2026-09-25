@@ -225,6 +225,10 @@
     font-size: 1.5rem;
     color: var(--text);
   }
+  .hiscore-box .hiscore-date {
+    margin-top: 2px;
+    letter-spacing: 0.05em;
+  }
   .overlay button.big {
     font-size: 1.1rem;
     padding: 12px 44px;
@@ -286,6 +290,7 @@
         <div class="hiscore-box">
           <span>HIGH SCORE</span>
           <strong id="titleHighScore">0</strong>
+          <span class="hiscore-date" id="titleHighScoreDate">-</span>
         </div>
         <button id="startBtn" class="big">スタート</button>
         <p class="hint">Enterキーでもスタートできます</p>
@@ -295,6 +300,7 @@
         <div class="new-record" id="newRecord" hidden>★ NEW RECORD ★</div>
         <p id="finalScore">スコア: 0</p>
         <p id="finalHighScore">ハイスコア: 0</p>
+        <p id="finalHighScoreDate">達成日: -</p>
         <p id="finalMaxCombo">最大コンボ: 0</p>
         <button id="retryBtn">もう一度</button>
         <button id="titleBtn" class="secondary">タイトルへ</button>
@@ -315,6 +321,7 @@
     <div class="panel">
       <h2>Status</h2>
       <div class="stat-row"><span>ハイスコア</span><span id="highScore">0</span></div>
+      <div class="stat-row"><span>達成日</span><span id="highScoreDate">-</span></div>
       <div class="stat-row"><span>スコア</span><span id="score">0</span></div>
       <div class="stat-row"><span>ライン</span><span id="lines">0</span></div>
       <div class="stat-row"><span>レベル</span><span id="level">1</span></div>
@@ -363,6 +370,9 @@
   const highScoreEl = document.getElementById("highScore");
   const titleHighScoreEl = document.getElementById("titleHighScore");
   const newRecordEl = document.getElementById("newRecord");
+  const highScoreDateEl = document.getElementById("highScoreDate");
+  const titleHighScoreDateEl = document.getElementById("titleHighScoreDate");
+  const finalHighScoreDateEl = document.getElementById("finalHighScoreDate");
   const comboEl = document.getElementById("combo");
   const comboPopupEl = document.getElementById("comboPopup");
   const finalMaxComboEl = document.getElementById("finalMaxCombo");
@@ -396,11 +406,41 @@
     }
   }
 
+  const HIGH_SCORE_DATE_KEY = "fallingPuzzleHighScoreDate";
+
+  function loadHighScoreDate() {
+    try {
+      return localStorage.getItem(HIGH_SCORE_DATE_KEY) || "";
+    } catch (e) {
+      return "";
+    }
+  }
+
+  function saveHighScoreDate(value) {
+    try {
+      localStorage.setItem(HIGH_SCORE_DATE_KEY, value);
+    } catch (e) {
+      // 保存できない環境ではその回のみ保持
+    }
+  }
+
+  // yyyy/mm/dd 形式(ローカル時刻)
+  function formatDate(d) {
+    const mm = String(d.getMonth() + 1).padStart(2, "0");
+    const dd = String(d.getDate()).padStart(2, "0");
+    return `${d.getFullYear()}/${mm}/${dd}`;
+  }
+
   let highScore = loadHighScore();
+  let highScoreDate = loadHighScoreDate();
 
   function updateHighScoreDisplay() {
+    const dateText = highScoreDate || "-";
     highScoreEl.textContent = highScore;
     titleHighScoreEl.textContent = highScore;
+    highScoreDateEl.textContent = dateText;
+    titleHighScoreDateEl.textContent = dateText;
+    finalHighScoreDateEl.textContent = `達成日: ${dateText}`;
   }
 
   const COLORS = {
@@ -661,7 +701,9 @@
     const isNewRecord = score > highScore;
     if (isNewRecord) {
       highScore = score;
+      highScoreDate = formatDate(new Date());
       saveHighScore(highScore);
+      saveHighScoreDate(highScoreDate);
       updateHighScoreDisplay();
     }
     newRecordEl.hidden = !isNewRecord;
