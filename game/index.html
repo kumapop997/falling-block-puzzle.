@@ -302,6 +302,7 @@
       <div class="overlay" id="pauseOverlay" hidden>
         <h2>一時停止</h2>
         <button id="resumeBtn">再開</button>
+        <button id="restartBtn" class="secondary">最初からやり直す</button>
       </div>
     </div>
   </div>
@@ -373,6 +374,7 @@
   const startBtn = document.getElementById("startBtn");
   const retryBtn = document.getElementById("retryBtn");
   const resumeBtn = document.getElementById("resumeBtn");
+  const restartBtn = document.getElementById("restartBtn");
   const pauseBtn = document.getElementById("pauseBtn");
   const titleBtn = document.getElementById("titleBtn");
 
@@ -812,6 +814,7 @@
   startBtn.addEventListener("click", startGame);
   retryBtn.addEventListener("click", startGame);
   resumeBtn.addEventListener("click", togglePause);
+  restartBtn.addEventListener("click", startGame);
   pauseBtn.addEventListener("click", togglePause);
   titleBtn.addEventListener("click", showTitle);
 
